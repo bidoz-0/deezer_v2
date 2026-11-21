@@ -1,0 +1,16 @@
+# TEST JETABLE : compile pleezer (open source) pour Windows et rend le .exe téléchargeable.
+name: build-pleezer
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/build-pleezer.yml']
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Compiler pleezer (version fixée)
+        run: cargo install pleezer --version 0.19.1 --locked --root dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pleezer-windows
+          path: dist/bin/pleezer.exe
